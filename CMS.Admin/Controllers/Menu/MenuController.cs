@@ -36,6 +36,7 @@ namespace CMS.Admin.Controllers.Menu
         }
 
         [Authorize(Roles = nameof(RoleEnum.Menu))]
+        [HttpGet("GetMenu")]
         public async Task<IActionResult> GetMenu()
         {
             var result = (await menuService.GetMenu(depth: 1)).ToWebApiResult().ToHttpResponse();
