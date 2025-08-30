@@ -2,6 +2,8 @@ using System.Threading.Tasks;
 using Application.Services.RelatedLink;
 using Application.ViewModels.RelatedLink.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.RelatedLink
@@ -17,7 +19,7 @@ namespace CMS.Admin.Controllers.RelatedLink
             _relatedLinkService = relatedLinkService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.RelatedLink))]
         [HttpPost("NewRelatedLink")]
         public async Task<IActionResult> NewRelatedLink(
             [FromBody] RequestNewRelatedLinkViewModel requestNewRelatedLinkViewModel)
@@ -26,7 +28,7 @@ namespace CMS.Admin.Controllers.RelatedLink
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.RelatedLink))]
         [HttpPut("EditRelatedLink")]
         public async Task<IActionResult> EditRelatedLink(
             [FromBody] RequestEditRelatedLinkViewModel requestEditRelatedLinkViewModel)
@@ -35,7 +37,7 @@ namespace CMS.Admin.Controllers.RelatedLink
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        // [Authorize]
         [HttpPost("GetRelatedLink")]
         public async Task<IActionResult> GetRelatedLink(
             [FromBody] RequestGetRelatedLinkViewModel requestGetRelatedLinkViewModel)
@@ -44,7 +46,7 @@ namespace CMS.Admin.Controllers.RelatedLink
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.RelatedLink))]
         [HttpDelete("DeleteRelatedLink")]
         public async Task<IActionResult> DeleteRelatedLink(
             [FromForm] int relatedLinkId)

@@ -2,6 +2,9 @@
 using Application.Services.ImageGallery;
 using Application.ViewModels.ImageGallery.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Domain.Entities.Identity.Role;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.ImageGallery
@@ -17,7 +20,7 @@ namespace CMS.Admin.Controllers.ImageGallery
             this._imageGalleryService = imageGalleryService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Gallery))]
         [HttpPost("NewImageGallery")]
         public async Task<IActionResult> NewImageGallery(
             [FromForm] RequestNewGalleryViewModel requestNewGalleryViewModel)
@@ -28,7 +31,7 @@ namespace CMS.Admin.Controllers.ImageGallery
                 .ToHttpResponse();
         }
         
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Gallery))]
         [HttpPut("EditImageGallery")]
         public async Task<IActionResult> EditImageGallery(
             [FromForm] RequestEditGalleryViewModel requestEditGalleryViewModel)
@@ -50,7 +53,7 @@ namespace CMS.Admin.Controllers.ImageGallery
                 .ToHttpResponse();
         }
         
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Gallery))]
         [HttpDelete("DeleteImageGallery")]
         public async Task<IActionResult> DeleteImageGallery(
             [FromForm] int galleryId)

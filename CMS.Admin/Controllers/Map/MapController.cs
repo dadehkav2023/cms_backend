@@ -2,6 +2,8 @@ using System.Threading.Tasks;
 using Application.Services.Map;
 using Application.ViewModels.Map.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.Map
@@ -17,7 +19,7 @@ namespace CMS.Admin.Controllers.Map
             _mapService = mapService;
         }
         
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Province))]
         [HttpPost("SetMapProvince")]
         public async Task<IActionResult> SetMapProvince(
             [FromForm] RequestSetProvinceMapViewModel requestSetProvinceMapViewModel)

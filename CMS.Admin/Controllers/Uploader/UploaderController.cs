@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CMS.Admin.Controllers.Uploader
 {
@@ -22,17 +23,20 @@ namespace CMS.Admin.Controllers.Uploader
         }
 
         [HttpPost("UploadImage")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UploadImage(IFormFile Image)
         {
             return (await fileUploaderService.Upload(Image)).ToWebApiResult().ToHttpResponse();
         }
         [HttpPost("UploadFile")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UploadFile(IFormFile file)
         {
             return (await fileUploaderService.Upload(file)).ToWebApiResult().ToHttpResponse();
         }
 
         [HttpPost("UploadFileCKeeditor")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UploadFileCKeeditor(IFormFile file)
         {
             var Upload_Data = await fileUploaderService.Upload(file);

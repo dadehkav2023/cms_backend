@@ -6,6 +6,8 @@ using Application.ViewModels.News.VideoNews.Request;
 using Application.ViewModels.News.VideoNews.Attachment.Request;
 using Application.ViewModels.News.VideoNews.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.News
@@ -37,7 +39,7 @@ namespace CMS.Admin.Controllers.News
        
         #region Attachment
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.VideoNews))]
         [HttpPost("Attachment/NewAttachment")]
         public async Task<IActionResult> NewNewsAttachment(
             [FromForm] RequestNewVideoNewsAttachmentViewModel requestVideoNewNewsAttachmentViewModel)
@@ -48,7 +50,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.VideoNews))]
         [HttpPut("Attachment/EditAttachment")]
         public async Task<IActionResult> EditNewsAttachment(
             [FromForm] RequestEditVideoNewsAttachmentViewModel requestEditVideoNewsAttachmentViewModel)

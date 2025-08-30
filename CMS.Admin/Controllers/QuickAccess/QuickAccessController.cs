@@ -3,6 +3,8 @@ using Application.Services.QuickAccess;
 using Application.ViewModels.QuickAccess.Request;
 using Application.ViewModels.ServiceDesk.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.QuickAccess
@@ -18,7 +20,7 @@ namespace CMS.Admin.Controllers.QuickAccess
             _quickAccessService = quickAccessService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.QuickAccess))]
         [HttpPost("NewQuickAccess")]
         public async Task<IActionResult> NewQuickAccess(
             [FromBody] RequestNewQuickAccessViewModel requestNewQuickAccessViewModel)
@@ -27,7 +29,7 @@ namespace CMS.Admin.Controllers.QuickAccess
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.QuickAccess))]
         [HttpPut("EditQuickAccess")]
         public async Task<IActionResult> EditQuickAccess(
             [FromBody] RequestEditQuickAccessViewModel requestEditQuickAccessViewModel)
@@ -45,7 +47,7 @@ namespace CMS.Admin.Controllers.QuickAccess
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.QuickAccess))]
         [HttpDelete("DeleteQuickAccess")]
         public async Task<IActionResult> DeleteQuickAccess(
             [FromForm] int quickAccessId)

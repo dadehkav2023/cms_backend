@@ -11,6 +11,7 @@ using Application.ViewModels.News.Request;
 using Application.ViewModels.News.TextNews.Request;
 using CMS.Admin.Helper.Response;
 using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.News
@@ -28,7 +29,7 @@ namespace CMS.Admin.Controllers.News
             _newsCategoryService = newsCategoryService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         [HttpPost("NewNews")]
         public async Task<IActionResult> NewNews(
             [FromForm] RequestNewNewsViewModel requestNewNewsViewModel)
@@ -38,7 +39,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         [HttpPut("EditNews")]
         public async Task<IActionResult> EditNews(
             [FromForm] RequestEditNewsViewModel requestEditNewsViewModel)
@@ -48,7 +49,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         [HttpDelete("DeleteNews")]
         public async Task<IActionResult> DeleteNews(
             [FromForm] RequestDeleteNewsViewModel requestDeleteNewsViewModel)
@@ -63,7 +64,7 @@ namespace CMS.Admin.Controllers.News
 
         #region Category
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         [HttpPost("Category/NewCategory")]
         public async Task<IActionResult> NewNewsCategory(
             [FromForm] RequestNewNewsCategoryViewModel requestNewNewsCategoryViewModel)
@@ -74,7 +75,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         [HttpPut("Category/EditCategory")]
         public async Task<IActionResult> EditNewsCategory(
             [FromForm] RequestEditNewsCategoryViewModel requestEditNewsCategoryViewModel)
@@ -85,7 +86,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        // [Authorize]
         [HttpGet("Category/GetCategory")]
         public async Task<IActionResult> GetNewsCategory()
         {
@@ -94,7 +95,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         [HttpDelete("Category/DeleteCategory")]
         public async Task<IActionResult> DeleteNewsCategory(
             [FromForm] int newsCategoryId)

@@ -6,6 +6,8 @@ using Application.ViewModels.Statement.Attachment.Request;
 using Application.ViewModels.Statement.Category.Request;
 using Application.ViewModels.Statement.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.Statement
@@ -26,7 +28,7 @@ namespace CMS.Admin.Controllers.Statement
             _statementCategoryService = statementCategoryService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Statement))]
         [HttpPost("NewStatement")]
         public async Task<IActionResult> NewStatement(
             [FromForm] RequestNewStatementViewModel requestNewStatementViewModel)
@@ -38,7 +40,7 @@ namespace CMS.Admin.Controllers.Statement
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Statement))]
         [HttpPut("EditStatement")]
         public async Task<IActionResult> EditStatement(
             [FromForm] RequestEditStatementViewModel requestEditStatementViewModel)
@@ -62,7 +64,7 @@ namespace CMS.Admin.Controllers.Statement
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Statement))]
         [HttpDelete("DeleteStatement")]
         public async Task<IActionResult> DeleteStatement(
             [FromForm] int statementId)
@@ -74,7 +76,7 @@ namespace CMS.Admin.Controllers.Statement
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Statement))]
         [HttpPost("Attachment/NewAttachment")]
         public async Task<IActionResult> NewStatementAttachment(
             [FromForm] RequestNewStatementAttachmentViewModel requestNewStatementAttachmentViewModel)
@@ -87,7 +89,7 @@ namespace CMS.Admin.Controllers.Statement
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Statement))]
         [HttpPut("Attachment/EditAttachment")]
         public async Task<IActionResult> EditStatementAttachment(
             [FromForm] RequestEditStatementAttachmentViewModel requestEditStatementAttachmentViewModel)
@@ -113,7 +115,7 @@ namespace CMS.Admin.Controllers.Statement
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Statement))]
         [HttpDelete("Attachment/DeleteAttachment")]
         public async Task<IActionResult> DeleteStatementAttachment(
             [FromForm] int statementAttachmentId)
@@ -129,7 +131,7 @@ namespace CMS.Admin.Controllers.Statement
 
         #region Category
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Statement))]
         [HttpPost("Category/NewCategory")]
         public async Task<IActionResult> NewStatementCategory(
             [FromForm] RequestNewStatementCategoryViewModel requestNewStatementCategoryViewModel)
@@ -140,7 +142,7 @@ namespace CMS.Admin.Controllers.Statement
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Statement))]
         [HttpPut("Category/EditCategory")]
         public async Task<IActionResult> EditStatementCategory(
             [FromForm] RequestEditStatementCategoryViewModel requestEditStatementCategoryViewModel)
@@ -160,7 +162,7 @@ namespace CMS.Admin.Controllers.Statement
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Statement))]
         [HttpDelete("Category/DeleteCategory")]
         public async Task<IActionResult> DeleteStatementCategory(
             [FromForm] int statementCategoryId)

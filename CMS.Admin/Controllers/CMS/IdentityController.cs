@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Application.Services.CMS.Identity;
 using Application.Services.CMS.Identity.Role;
 using Application.ViewModels.CMS.Identity.Request;
+using Domain.Entities.Identity.Role;
 
 namespace CMS.Admin.Controllers.CMS
 {
@@ -25,7 +26,7 @@ namespace CMS.Admin.Controllers.CMS
             _roleService = roleService;
         }
 
-        //[Authorize]
+        [Authorize(Roles="Admin")]
         [HttpPost("SetRoleToUser")]
         public async Task<IActionResult> SetRoleToUser(
             [FromBody] RequestAddRolesToUserViewModel requestAddRolesToUserViewModel)
@@ -33,7 +34,7 @@ namespace CMS.Admin.Controllers.CMS
             return (await _roleService.SetRoleToUser(requestAddRolesToUserViewModel)).ToWebApiResult().ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles="Admin")]
         [HttpDelete("RemoveRoleFromUser")]
         public async Task<IActionResult> RemoveRoleFromUser(
             [FromBody] RequestRemoveRolesFromUserViewModel requestRemoveRolesFromUserViewModel)
@@ -42,14 +43,14 @@ namespace CMS.Admin.Controllers.CMS
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles="Admin")]
         [HttpGet("GetAllRoles")]
         public async Task<IActionResult> GetAllRoles(int? userId)
         {
             return (await _roleService.GetAllRoles(userId)).ToWebApiResult().ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles="Admin")]
         [HttpGet("GetRolesOfUser")]
         public async Task<IActionResult> GetRolesOfUser(int userId)
         {

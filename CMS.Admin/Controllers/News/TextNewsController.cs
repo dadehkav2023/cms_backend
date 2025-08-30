@@ -12,6 +12,7 @@ using Application.ViewModels.News.TextNews.Attachment.Request;
 using Application.ViewModels.News.TextNews.Request;
 using CMS.Admin.Helper.Response;
 using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.News
@@ -43,7 +44,7 @@ namespace CMS.Admin.Controllers.News
        
         #region Attachment
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         [HttpPost("Attachment/NewAttachment")]
         public async Task<IActionResult> NewNewsAttachment(
             [FromForm] RequestTextNewNewsAttachmentViewModel requestTextNewNewsAttachmentViewModel)
@@ -54,7 +55,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         [HttpPut("Attachment/EditAttachment")]
         public async Task<IActionResult> EditNewsAttachment(
             [FromForm] RequestEditTextNewsAttachmentViewModel requestEditTextNewsAttachmentViewModel)
@@ -65,7 +66,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        // [Authorize]
         [HttpPost("Attachment/GetAttachment")]
         public async Task<IActionResult> GetNewsAttachment(
             [FromForm] RequestTextGetNewsAttachmentViewModel requestTextGetNewsAttachmentViewModel)
@@ -76,7 +77,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         [HttpDelete("Attachment/DeleteAttachment")]
         public async Task<IActionResult> DeleteNewsAttachment(
             [FromForm] int newsAttachmentId)

@@ -2,6 +2,8 @@
 using Application.Services.ContactUs;
 using Application.ViewModels.ContactUs.ContactUs.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.ContactUs
@@ -18,7 +20,7 @@ namespace CMS.Admin.Controllers.ContactUs
             _contactUsService = contactUsService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.ContactUs))]
         [HttpPost("SetContactUs")]
         public async Task<IActionResult> SetContactUs([FromForm] RequestSetContactUsViewModel requestSetContactUsViewModel)
         {

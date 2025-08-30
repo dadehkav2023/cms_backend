@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Application.Services.Slider;
 using Application.ViewModels.Slider.Request;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CMS.Admin.Controllers.Slider
 {
@@ -18,7 +20,7 @@ namespace CMS.Admin.Controllers.Slider
             _sliderService = sliderService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Slider))]
         [HttpPost("CreateNewSlider")]
         public async Task<IActionResult> CreateNewSlider([FromForm] RequestCreateSliderViewModel request)
         {
@@ -28,7 +30,7 @@ namespace CMS.Admin.Controllers.Slider
             return (await _sliderService.CreateNewSlider(request, userId)).ToWebApiResult().ToHttpResponse();
         } 
         
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Slider))]
         [HttpPut("EditSlider")]
         public async Task<IActionResult> EditSlider([FromForm] RequestEditSliderViewModel requestEditSliderViewModel)
         {
@@ -39,7 +41,7 @@ namespace CMS.Admin.Controllers.Slider
             return (await _sliderService.EditSlider(requestEditSliderViewModel, userId)).ToWebApiResult().ToHttpResponse();
         }
         
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Slider))]
         [HttpPost("GetSlider")]
         public async Task<IActionResult> GetSlider([FromBody] RequestGetSliderListViewModel requestGetSliderListViewModel)
         {
@@ -50,7 +52,7 @@ namespace CMS.Admin.Controllers.Slider
             return (await _sliderService.GetSlider(requestGetSliderListViewModel, userId)).ToWebApiResult().ToHttpResponse();
         }
         
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Slider))]
         [HttpDelete("DeleteSlider")]
         public async Task<IActionResult> DeleteSlider([FromForm] int sliderId)
         {

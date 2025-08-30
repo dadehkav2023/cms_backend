@@ -4,6 +4,8 @@ using Application.Services.Article.Article;
 using Application.ViewModels.Article.Attachment.Request;
 using Application.ViewModels.Article.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.Article
@@ -22,8 +24,8 @@ namespace CMS.Admin.Controllers.Article
             _articleAttachmentService = articleAttachmentService;
         }
 
-        //[Authorize]
         [HttpPost("NewArticle")]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         public async Task<IActionResult> NewArticle(
             [FromForm] RequestNewArticleViewModel requestNewArticleViewModel)
         {
@@ -32,8 +34,8 @@ namespace CMS.Admin.Controllers.Article
                 .ToHttpResponse();
         }
 
-        //[Authorize]
         [HttpPut("EditArticle")]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         public async Task<IActionResult> EditArticle(
             [FromForm] RequestEditArticleViewModel requestEditArticleViewModel)
         {
@@ -42,7 +44,7 @@ namespace CMS.Admin.Controllers.Article
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        
         [HttpPost("GetArticle")]
         public async Task<IActionResult> GetArticle(
             [FromBody] RequestGetArticleViewModel requestGetArticleViewModel)
@@ -52,8 +54,8 @@ namespace CMS.Admin.Controllers.Article
                 .ToHttpResponse();
         }
 
-        //[Authorize]
         [HttpDelete("DeleteArticle")]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         public async Task<IActionResult> DeleteArticle(
             [FromForm] int articleId)
         {
@@ -64,6 +66,7 @@ namespace CMS.Admin.Controllers.Article
 
         //[Authorize]
         [HttpPost("Attachment/NewAttachment")]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
         public async Task<IActionResult> NewArticleAttachment(
             [FromForm] RequestNewArticleAttachmentViewModel requestNewArticleAttachmentViewModel)
         {
@@ -76,6 +79,8 @@ namespace CMS.Admin.Controllers.Article
         
         //[Authorize]
         [HttpPut("Attachment/EditAttachment")]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
+        
         public async Task<IActionResult> EditArticleAttachment(
             [FromForm] RequestEditArticleAttachmentViewModel requestEditArticleAttachmentViewModel)
         {
@@ -88,6 +93,7 @@ namespace CMS.Admin.Controllers.Article
         
         //[Authorize]
         [HttpPost("Attachment/GetAttachment")]
+        
         public async Task<IActionResult> GetArticleAttachment(
             [FromForm] RequestGetArticleAttachmentViewModel requestGetArticleAttachmentViewModel)
         {
@@ -98,8 +104,9 @@ namespace CMS.Admin.Controllers.Article
                 .ToHttpResponse();
         }
         
-        //[Authorize]
         [HttpDelete("Attachment/DeleteAttachment")]
+        [Authorize(Roles = nameof(RoleEnum.TextNews))]
+        
         public async Task<IActionResult> DeleteArticleAttachment(
             [FromForm] int articleAttachmentId)
         {

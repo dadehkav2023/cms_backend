@@ -4,6 +4,8 @@ using Application.Services.Rules.Attachment;
 using Application.ViewModels.Rules.Attachment.Request;
 using Application.ViewModels.Rules.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.Rules
@@ -22,7 +24,7 @@ namespace CMS.Admin.Controllers.Rules
             _rulesAttachmentService = rulesAttachmentService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.CmsSetting))]
         [HttpPost("SetRules")]
         public async Task<IActionResult> SetRule(
             [FromForm] RequestSetRulesViewModel requestSetRulesViewModel)
@@ -41,7 +43,7 @@ namespace CMS.Admin.Controllers.Rules
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.CmsSetting))]
         [HttpPost("Attachment/NewAttachment")]
         public async Task<IActionResult> NewRulesAttachment(
             [FromForm] RequestNewRulesAttachmentViewModel requestNewRulesAttachmentViewModel)
@@ -53,7 +55,7 @@ namespace CMS.Admin.Controllers.Rules
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.CmsSetting))]
         [HttpPut("Attachment/EditAttachment")]
         public async Task<IActionResult> EditRulesAttachment(
             [FromForm] RequestEditRulesAttachmentViewModel requestEditRulesAttachmentViewModel)
@@ -77,7 +79,7 @@ namespace CMS.Admin.Controllers.Rules
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.CmsSetting))]
         [HttpDelete("Attachment/DeleteAttachment")]
         public async Task<IActionResult> DeleteRulesAttachment(
             [FromForm] int rulesAttachmentId)

@@ -4,6 +4,8 @@ using Application.Services.ContactUs.ContactUsMessage;
 using Application.ViewModels.ContactUs.ContactUs.ContactUsMessage.Request;
 using Application.ViewModels.ContactUs.ContactUs.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.ContactUs
@@ -19,7 +21,7 @@ namespace CMS.Admin.Controllers.ContactUs
             _contactUsMessageService = contactUsMessageService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.ContactUs))]
         [HttpPost("GetContactUsMessage")]
         public async Task<IActionResult> GetContactUsMessage(
             [FromBody] RequestGetContactUsMessageViewModel requestGetContactUsMessageViewModel)

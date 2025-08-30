@@ -6,6 +6,8 @@ using Application.ViewModels.News.PhotoNews.Request;
 using Application.ViewModels.News.PhotoNews.Attachment.Request;
 using Application.ViewModels.News.PhotoNews.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.News
@@ -25,7 +27,7 @@ namespace CMS.Admin.Controllers.News
         }
 
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.ImageNews))]
         [HttpPost("GetNews")]
         public async Task<IActionResult> GetNews(
             [FromBody] RequestGetPhotoNewsViewModel requestGetPhotoNewsViewModel)
@@ -37,7 +39,7 @@ namespace CMS.Admin.Controllers.News
        
         #region Attachment
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.ImageNews))]
         [HttpPost("Attachment/NewAttachment")]
         public async Task<IActionResult> NewNewsAttachment(
             [FromForm] RequestNewPhotoNewsAttachmentViewModel requestPhotoNewNewsAttachmentViewModel)
@@ -48,7 +50,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.ImageNews))]
         [HttpPut("Attachment/EditAttachment")]
         public async Task<IActionResult> EditNewsAttachment(
             [FromForm] RequestEditPhotoNewsAttachmentViewModel requestEditPhotoNewsAttachmentViewModel)
@@ -59,7 +61,6 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
         [HttpPost("Attachment/GetAttachment")]
         public async Task<IActionResult> GetNewsAttachment(
             [FromForm] RequestGetPhotoNewsAttachmentViewModel requestPhotoGetNewsAttachmentViewModel)
@@ -70,7 +71,7 @@ namespace CMS.Admin.Controllers.News
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.ImageNews))]
         [HttpDelete("Attachment/DeleteAttachment")]
         public async Task<IActionResult> DeleteNewsAttachment(
             [FromForm] int newsAttachmentId)

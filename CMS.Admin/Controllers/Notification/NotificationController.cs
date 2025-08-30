@@ -5,6 +5,8 @@ using Application.ViewModels.Notification.Notification.Attachment.Request;
 using Application.ViewModels.Notification.Notification.Request;
 using Application.ViewModels.ServiceDesk.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.Notification
@@ -23,7 +25,7 @@ namespace CMS.Admin.Controllers.Notification
             _notificationAttachmentService = notificationAttachmentService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Notification))]
         [HttpPost("NewNotification")]
         public async Task<IActionResult> NewNotification(
             [FromForm] RequestNewNotificationViewModel requestNewNotificationViewModel)
@@ -35,7 +37,7 @@ namespace CMS.Admin.Controllers.Notification
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Notification))]
         [HttpPut("EditNotification")]
         public async Task<IActionResult> EditNotification(
             [FromForm] RequestEditNotificationViewModel requestEditNotificationViewModel)
@@ -59,7 +61,7 @@ namespace CMS.Admin.Controllers.Notification
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Notification))]
         [HttpDelete("DeleteNotification")]
         public async Task<IActionResult> DeleteNotification(
             [FromForm] int notificationId)
@@ -71,7 +73,7 @@ namespace CMS.Admin.Controllers.Notification
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Notification))]
         [HttpPost("Attachment/NewAttachment")]
         public async Task<IActionResult> NewNotificationAttachment(
             [FromForm] RequestNewNotificationAttachmentViewModel requestNewNotificationAttachmentViewModel)
@@ -84,7 +86,7 @@ namespace CMS.Admin.Controllers.Notification
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Notification))]
         [HttpPut("Attachment/EditAttachment")]
         public async Task<IActionResult> EditNotificationAttachment(
             [FromForm] RequestEditNotificationAttachmentViewModel requestEditNotificationAttachmentViewModel)
@@ -97,7 +99,7 @@ namespace CMS.Admin.Controllers.Notification
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Notification))]
         [HttpPost("Attachment/GetAttachment")]
         public async Task<IActionResult> GetNotificationAttachment(
             [FromForm] RequestGetNotificationAttachmentViewModel requestGetNotificationAttachmentViewModel)
@@ -110,7 +112,7 @@ namespace CMS.Admin.Controllers.Notification
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.Notification))]
         [HttpDelete("Attachment/DeleteAttachment")]
         public async Task<IActionResult> DeleteNotificationAttachment(
             [FromForm] int notificationAttachmentId)

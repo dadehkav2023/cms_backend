@@ -4,6 +4,7 @@ using CMS.Admin.Helper.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Common.Enum;
 
 namespace CMS.Admin.Controllers.CMS
 {
@@ -19,7 +20,7 @@ namespace CMS.Admin.Controllers.CMS
             _settingService = settingService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.CmsSetting))]
         [HttpPost("SetSetting")]
         public async Task<IActionResult> SetSetting([FromForm] RequestSetSettingViewModel requestSetSettingViewModel)
         {
@@ -28,7 +29,7 @@ namespace CMS.Admin.Controllers.CMS
             return (await _settingService.SetSetting(requestSetSettingViewModel, userId)).ToWebApiResult().ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.CmsSetting))]
         [HttpGet("GetSetting")]
         //[Authorize(Roles = "Operator")]
         public async Task<IActionResult> GetSetting()

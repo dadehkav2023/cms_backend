@@ -5,6 +5,8 @@ using Application.ViewModels.ServiceDesk.Request;
 using Application.ViewModels.Slider;
 using Application.ViewModels.Slider.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.ServiceDesk
@@ -20,7 +22,7 @@ namespace CMS.Admin.Controllers.ServiceDesk
             _serviceDeskService = serviceDeskService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.ServiceDesk))]
         [HttpPost("CreateNewServiceDesk")]
         public async Task<IActionResult> CreateNewServiceDesk(
             [FromForm] RequestNewServiceDeskViewModel requestNewServiceDeskViewModel)
@@ -31,7 +33,7 @@ namespace CMS.Admin.Controllers.ServiceDesk
                 .ToHttpResponse();
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.ServiceDesk))]
         [HttpPut("EditServiceDesk")]
         public async Task<IActionResult> EditServiceDesk(
             [FromForm] RequestEditServiceDeskViewModel requestEditServiceDeskViewModel)
@@ -54,7 +56,7 @@ namespace CMS.Admin.Controllers.ServiceDesk
                 .ToHttpResponse();
         }
         
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.ServiceDesk))]
         [HttpDelete("DeleteServiceDesk")]
         public async Task<IActionResult> DeleteServiceDesk(
             [FromForm] int serviceDeskId)
