@@ -29,7 +29,6 @@ namespace CMS.Admin.Controllers.CMS
             return (await _settingService.SetSetting(requestSetSettingViewModel, userId)).ToWebApiResult().ToHttpResponse();
         }
 
-        [Authorize(Roles = nameof(RoleEnum.CmsSetting))]
         [HttpGet("GetSetting")]
         //[Authorize(Roles = "Operator")]
         public async Task<IActionResult> GetSetting()

@@ -41,7 +41,6 @@ namespace CMS.Admin.Controllers.Slider
             return (await _sliderService.EditSlider(requestEditSliderViewModel, userId)).ToWebApiResult().ToHttpResponse();
         }
         
-        [Authorize(Roles = nameof(RoleEnum.Slider))]
         [HttpPost("GetSlider")]
         public async Task<IActionResult> GetSlider([FromBody] RequestGetSliderListViewModel requestGetSliderListViewModel)
         {

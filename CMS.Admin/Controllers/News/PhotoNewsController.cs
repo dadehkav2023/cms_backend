@@ -27,7 +27,6 @@ namespace CMS.Admin.Controllers.News
         }
 
 
-        [Authorize(Roles = nameof(RoleEnum.ImageNews))]
         [HttpPost("GetNews")]
         public async Task<IActionResult> GetNews(
             [FromBody] RequestGetPhotoNewsViewModel requestGetPhotoNewsViewModel)
