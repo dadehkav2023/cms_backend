@@ -50,7 +50,7 @@ namespace CMS.Admin.Controllers.CMS
             return (await _roleService.GetAllRoles(userId)).ToWebApiResult().ToHttpResponse();
         }
 
-        [Authorize(Roles="Admin")]
+        [Authorize]
         [HttpGet("GetRolesOfUser")]
         public async Task<IActionResult> GetRolesOfUser(int userId)
         {
