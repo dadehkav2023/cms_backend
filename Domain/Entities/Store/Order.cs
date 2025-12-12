@@ -4,6 +4,7 @@ using Domain.Attributes;
 using Domain.Attributes.Notification;
 using Domain.Attributes.Store;
 using Domain.Entities.BaseEntity;
+using Domain.Entities.Financial;
 using Domain.Entities.Identity.User;
 
 namespace Domain.Entities.Store;
@@ -28,6 +29,7 @@ public class Order : BaseEntityWithIdentityKey
     public virtual User User { get; set; }
     public virtual CityOrVillage CityOrVillage { get; set; }
     public virtual ICollection<OrderItem> OrderItems { get; set; }
+    public virtual ICollection<FinancialTransaction> FinancialTransactions { get; set; }
 }
 
 [Auditable]
