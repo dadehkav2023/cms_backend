@@ -10,6 +10,7 @@ using Application.Interfaces.ExternalApi.FileService;
 using Application.Interfaces.IRepositories;
 using Application.ViewModels.Store.Product;
 using Domain.Entities.Store;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services.Store;
 
@@ -104,11 +105,58 @@ public class ProductService : IProductService
                     ProductTypeEnum = x.ProductTypeEnum
                 });
 
-            var paginatedResult = query
+            var paginatedResult = await query
                 .Skip((model.Page - 1) * model.PageSize)
                 .Take(model.PageSize)
                 .OrderByDescending(x=>x.Id)
-                .ToList();
+                .ToListAsync(ct);
+
+            var result = new ResponseGetAllProductViewModel
+            {
+                Count = paginatedResult.Count,
+                Items = paginatedResult,
+                TotalCount = query.Count(),
+                CurrentPage = model.Page
+            };
+            messages.Add(new BusinessLogicMessage(type: MessageType.Info, message: MessageId.Success));
+            return new BusinessLogicResult<ResponseGetAllProductViewModel>(succeeded: true, result: result,
+                messages: messages);
+        }
+        catch (Exception ex)
+        {
+            messages.Add(new BusinessLogicMessage(type: MessageType.Error, message: MessageId.Exception));
+            return new BusinessLogicResult<ResponseGetAllProductViewModel>(succeeded: false, result: null,
+                messages: messages,
+                exception: ex);
+        }
+    }
+    
+    public async Task<BusinessLogicResult<ResponseGetAllProductViewModel>> GetAllProductsAsync(
+        RequestGetAllProductByFilterViewModel model, CancellationToken ct)
+    {
+        var messages = new List<BusinessLogicMessage>();
+        try
+        {
+            var query = _productRepository
+                .DeferredWhere(x=>x.IsActive)
+                .Where(x=>x.Inventory>0)
+                .Select(x =>
+                new ResponseGetAllProductItemViewModel
+                {
+                    Description = x.Description,
+                    Inventory = x.Inventory,
+                    FilesAsJson = x.ImagePath,
+                    Price = x.Price,
+                    Id = x.Id,
+                    Title = x.Title,
+                    ProductTypeEnum = x.ProductTypeEnum
+                });
+
+            var paginatedResult = await query
+                .Skip((model.Page - 1) * model.PageSize)
+                .Take(model.PageSize)
+                .OrderByDescending(x=>x.Id)
+                .ToListAsync(ct);
 
             var result = new ResponseGetAllProductViewModel
             {

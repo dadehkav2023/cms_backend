@@ -31,7 +31,7 @@ public class AdminProductController : Controller
 
     [HttpPost("[action]")]
     public async Task<IActionResult> GetAllProductsByFilter(
-        [FromForm] RequestGetAllProductByFilterViewModel model, CancellationToken cancellationToken)
+        [FromBody] RequestGetAllProductByFilterViewModel model, CancellationToken cancellationToken)
     {
         return (await _productService.GetAllProductsByFilterAsync(model, cancellationToken)).ToWebApiResult()
             .ToHttpResponse();

@@ -422,6 +422,7 @@ namespace Infrastructure.IOC
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IRegisterService, RegisterService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddTransient<IValidator<RequestSetProductViewModel>, RequestSetProductValidator>();
 
