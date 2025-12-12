@@ -48,9 +48,6 @@ namespace Persistence.Migrations.identity
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<int>("InsertBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("InsertTime")
                         .HasColumnType("datetime2");
 
@@ -105,9 +102,6 @@ namespace Persistence.Migrations.identity
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int>("UpdateBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
@@ -136,9 +130,6 @@ namespace Persistence.Migrations.identity
                     b.Property<long>("Amount")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("InsertBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("InsertTime")
                         .HasColumnType("datetime2");
 
@@ -147,9 +138,6 @@ namespace Persistence.Migrations.identity
 
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("UpdateBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -279,9 +267,6 @@ namespace Persistence.Migrations.identity
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("InsertBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("InsertTime")
                         .HasColumnType("datetime2");
 
@@ -296,9 +281,6 @@ namespace Persistence.Migrations.identity
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UpdateBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -317,9 +299,6 @@ namespace Persistence.Migrations.identity
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("InsertBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("InsertTime")
                         .HasColumnType("datetime2");
 
@@ -334,9 +313,6 @@ namespace Persistence.Migrations.identity
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UpdateBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -363,9 +339,6 @@ namespace Persistence.Migrations.identity
 
                     b.Property<decimal>("DiscountAmount")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("InsertBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("InsertTime")
                         .HasColumnType("datetime2");
@@ -399,9 +372,6 @@ namespace Persistence.Migrations.identity
                     b.Property<decimal>("TaxAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("UpdateBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
@@ -424,9 +394,6 @@ namespace Persistence.Migrations.identity
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("InsertBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("InsertTime")
                         .HasColumnType("datetime2");
 
@@ -447,9 +414,6 @@ namespace Persistence.Migrations.identity
 
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("UpdateBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -473,9 +437,6 @@ namespace Persistence.Migrations.identity
                     b.Property<int>("CountyId")
                         .HasColumnType("int");
 
-                    b.Property<int>("InsertBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("InsertTime")
                         .HasColumnType("datetime2");
 
@@ -487,9 +448,6 @@ namespace Persistence.Migrations.identity
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UpdateBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
@@ -513,9 +471,6 @@ namespace Persistence.Migrations.identity
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InsertBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("InsertTime")
                         .HasColumnType("datetime2");
@@ -542,9 +497,6 @@ namespace Persistence.Migrations.identity
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("UpdateBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
@@ -560,9 +512,6 @@ namespace Persistence.Migrations.identity
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("InsertBy")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("InsertTime")
                         .HasColumnType("datetime2");
 
@@ -574,9 +523,6 @@ namespace Persistence.Migrations.identity
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UpdateBy")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");

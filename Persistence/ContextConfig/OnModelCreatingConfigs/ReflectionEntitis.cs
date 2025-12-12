@@ -16,9 +16,7 @@ namespace Persistence.ContextConfig.OnModelCreatingConfigs
                 if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute), true).Length > 0)
                 {
                     builder.Entity(entityType.Name).Property<DateTime?>("InsertTime");
-                    builder.Entity(entityType.Name).Property<int>("InsertBy");
                     builder.Entity(entityType.Name).Property<DateTime?>("UpdateTime");
-                    builder.Entity(entityType.Name).Property<int>("UpdateBy");
                     builder.Entity(entityType.Name).Property<DateTime?>("RemoveTime");
                     builder.Entity(entityType.Name).Property<bool?>("IsRemoved");
                 }
