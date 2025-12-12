@@ -6,12 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Application.Interfaces.IRepositories;
 
 namespace Infrastructure.IOC.IdentityContextConfigs
 {
     public static class IdentityContextConfig
     {
-        public static IServiceCollection AddIdentityContext<TContext, TUser, TRole, TKey/*, TDescriber*/>
+        public static IServiceCollection AddIdentityContext< TContext, TUser, TRole, TKey/*, TDescriber*/>
              (this IServiceCollection services,
               IConfiguration Configuration,
               string ConnectionConfigurationKey,
@@ -31,6 +32,9 @@ namespace Infrastructure.IOC.IdentityContextConfigs
             where TKey : IEquatable<TKey>
             //where TDescriber : IdentityErrorDescriber
         {
+            
+
+            
             services.AddDbContext<TContext>(options =>
             {
                 options.UseSqlServer(

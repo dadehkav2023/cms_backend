@@ -116,6 +116,8 @@ namespace CMS.Admin
             //Identity Config
             services.AddIdentityContext<IdentityDataBaseContext, User, Role, int>(Configuration,
                 Configuration.GetConnectionString("Application"));
+            services.AddScoped<IUnitOfWork, IdentityDataBaseContext>();
+            
             //SSO Config
             services.Add_SSOAPI_Config(
                 Client_Id: Configuration.GetSection("SSO").GetSection("ClientId").Value,

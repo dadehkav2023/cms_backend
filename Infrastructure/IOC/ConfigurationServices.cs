@@ -32,6 +32,7 @@ using Application.Services.Slider;
 using Application.Services.Statement;
 using Application.Services.Statement.Attachment;
 using Application.Services.Statement.Category;
+using Application.Services.Store;
 using Application.Validations.FluentValidations.AboutUs;
 using Application.Validations.FluentValidations.Article;
 using Application.Validations.FluentValidations.Article.Attachment;
@@ -49,6 +50,7 @@ using Application.Validations.FluentValidations.SettingValidate;
 using Application.Validations.FluentValidations.SliderValidation;
 using Application.Validations.FluentValidations.Statement;
 using Application.Validations.FluentValidations.Statement.Attachment;
+using Application.Validations.FluentValidations.Store;
 using Application.ViewModels.AboutUs.Request;
 using Application.ViewModels.Article.Attachment.Request;
 using Application.ViewModels.Article.Request;
@@ -66,6 +68,7 @@ using Application.ViewModels.ServiceDesk.Request;
 using Application.ViewModels.Slider.Request;
 using Application.ViewModels.Statement.Attachment.Request;
 using Application.ViewModels.Statement.Request;
+using Application.ViewModels.Store.Product;
 using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -417,8 +420,11 @@ namespace Infrastructure.IOC
         {
             //Services
             services.AddScoped<IRoleService, RoleService>();
-            
             services.AddScoped<IRegisterService, RegisterService>();
+            services.AddScoped<IProductService, ProductService>();
+
+            services.AddTransient<IValidator<RequestSetProductViewModel>, RequestSetProductValidator>();
+
             
             return services;
         }

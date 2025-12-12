@@ -19,9 +19,9 @@ namespace Infrastructure.ExternalApi.FileServer
     public class FileUploaderService : IFileUploaderService
     {
         private ApiImageUploaderViewModel _settings;
-        private readonly IHostingEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
 
-        public FileUploaderService(IHostingEnvironment hostingEnvironment, IOptions<ApiImageUploaderViewModel> settings)
+        public FileUploaderService(IWebHostEnvironment hostingEnvironment, IOptions<ApiImageUploaderViewModel> settings)
         {
             _settings = settings.Value;
             _environment = hostingEnvironment;

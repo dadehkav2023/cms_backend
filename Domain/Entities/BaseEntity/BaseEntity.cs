@@ -15,6 +15,7 @@ namespace Domain.Entities.BaseEntity
     public class BaseEntityWithIdentityKey:BaseEntityWithIdentityKey<int>
     {
     }
+    
     public class BaseEntityWithoutIdentityKey<TPrimaryKey>
     {
         [Key]

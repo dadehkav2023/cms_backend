@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Domain.Attributes.Identity;
 using Domain.Entities.ContactUs;
+using Domain.Entities.Store;
 using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Entities.Identity.User
@@ -11,6 +12,8 @@ namespace Domain.Entities.Identity.User
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
 
         //public ICollection<ContactUsMessage> ContactUsMessages { get; set; }
 
