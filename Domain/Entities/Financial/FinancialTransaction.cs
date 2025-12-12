@@ -31,7 +31,6 @@ public class FinancialTransaction : BaseEntityWithIdentityKey
     public int? OrderId { get; set; }
 
     public virtual Order? Order { get; set; }
-    public string BasketCode { get; set; }
     public long RequestAmount { get; set; }
 
     public string? BankResponseAsJson { get; set; }
@@ -49,10 +48,8 @@ public class FinancialTransaction : BaseEntityWithIdentityKey
     /// </summary>
     public string StateCode { get; set; }
 
-    /// <summary>
-    ///  کد پذیرنده یا ترمینال اختصاصی پذیرنده می باشد
-    /// </summary>
-    public int ResCode { get; set; }
+    
+    public string ResCode { get; set; }
 
     /// <summary>
     ///  این پارامتر کدی است تا 50 حرف یا عدد که برای هر تراکنش ایجاد می شود.

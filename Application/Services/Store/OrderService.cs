@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using Application.BusinessLogic;
 using Application.BusinessLogic.Message;
 using Application.Interfaces.IRepositories;
+using Application.Services.WALLET.Services.Interface;
 using Application.ViewModels.Store.Order;
 using Common.EnumList;
+using Common.EnumList.WALLETEnums;
+using Domain.Entities.Financial;
 using Domain.Entities.Identity.User;
 using Domain.Entities.Store;
 using Microsoft.AspNetCore.Identity;
@@ -16,23 +19,28 @@ using Exception = System.Exception;
 
 namespace Application.Services.Store;
 
-public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager) : IOrderService
+public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager, IWalletService walletService)
+    : IOrderService
 {
     private readonly IRepository<Order> _orderRepository = unitOfWork.GetRepository<Order>();
     private readonly IRepository<Product> _productRepository = unitOfWork.GetRepository<Product>();
-    private readonly UserManager<User> _userManager = userManager;
 
-    public async Task<BusinessLogicResult<string>> CreateOrderAsync(RequestCreateNewOrderViewModel model, string userName,
+    private readonly IRepository<FinancialTransaction> _financialTransactionRepository =
+        unitOfWork.GetRepository<FinancialTransaction>();
+
+    public async Task<BusinessLogicResult<string>> CreateOrderAsync(RequestCreateNewOrderViewModel model,
+        string userName,
         CancellationToken ct)
     {
         var messages = new List<BusinessLogicMessage>();
         try
         {
-            var user = await _userManager.FindByNameAsync(userName);
+            var user = await userManager.FindByNameAsync(userName);
             if (user == null)
             {
                 throw new Exception("user is null");
             }
+
             var result = "";
 
             var productIds = model.Items.Select(x => x.ProductId).ToList();
@@ -50,7 +58,8 @@ public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager)
                 CityOrVillageId = model.CityOrVillageId,
                 UserId = user.Id,
                 OrderNumber = DateTime.Now.ToString("yyyyMMddHHmmssfff") + new Random().Next(1, 9999),
-                OrderItems = new List<OrderItem>()
+                OrderItems = new List<OrderItem>(),
+                FinancialTransactions = new List<FinancialTransaction>()
             };
             foreach (var item in model.Items)
             {
@@ -80,13 +89,41 @@ public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager)
                 order.OrderItems.Add(orderItem);
             }
 
-            order.ProductPrice = order.OrderItems.Select(x=> new
+            order.ProductPrice = order.OrderItems.Select(x => new
             {
-                totalPrice = (decimal)x.Quantity*x.Price
-            }).Sum(x=>x.totalPrice);
+                totalPrice = (decimal)x.Quantity * x.Price
+            }).Sum(x => x.totalPrice);
             order.PayablePrice = order.ProductPrice;
 
-            await _orderRepository.AddAsync(order);
+            var currentUserWalletBalance = await walletService.GetWalletBalance();
+            if (currentUserWalletBalance.Result < order.PayablePrice)
+            {
+                messages.Add(new BusinessLogicMessage(type: MessageType.Error,
+                    message: MessageId.InsufficientWalletBalance));
+                return new BusinessLogicResult<string>(succeeded: false, result: null, messages: messages);
+            }
+
+            await walletService.SubtractPaymentFromWallet((long)order.PayablePrice);
+
+            #region ADD FINANCIAL TRANSACTION RECORD
+
+            var newFinancialTransaction = new FinancialTransaction
+            {
+                Amount = (long)order.PayablePrice,
+                Description = FinancialTransactionTypeEnum.PayFromWallet.GetEnumDescription(),
+                Type = FinancialTransactionTypeEnum.PayFromWallet,
+                Status = FinancialTransactionStatus.Succeeded,
+                UserId = user.Id,
+                PaymentDate = DateTime.Now,
+                Order = order
+            };
+            await _financialTransactionRepository.AddAsync(newFinancialTransaction, false);
+            order.FinancialTransactions.Add(newFinancialTransaction);
+
+            #endregion
+
+            await _orderRepository.AddAsync(order, true);
+
             messages.Add(new BusinessLogicMessage(type: MessageType.Info, message: MessageId.Success));
             return new BusinessLogicResult<string>(succeeded: true, result: result, messages: messages);
         }

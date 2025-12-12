@@ -14,6 +14,7 @@ namespace Application.Interfaces.IRepositories
         IQueryable<TEntity> DeferdSelectAll();
         TEntity Add(TEntity entity);
         Task<TEntity> AddAsync(TEntity entity);
+        Task<TEntity> AddAsync(TEntity entity, bool autoSave);
         Task<TEntity> FirstOrDefaultItemAsync(Expression<Func<TEntity, bool>> condition);
 
         IQueryable<TEntity> DeferredWhere(Expression<Func<TEntity, bool>> condition);

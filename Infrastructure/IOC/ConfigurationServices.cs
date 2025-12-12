@@ -33,6 +33,8 @@ using Application.Services.Statement;
 using Application.Services.Statement.Attachment;
 using Application.Services.Statement.Category;
 using Application.Services.Store;
+using Application.Services.WALLET.Services.Concrete;
+using Application.Services.WALLET.Services.Interface;
 using Application.Validations.FluentValidations.AboutUs;
 using Application.Validations.FluentValidations.Article;
 using Application.Validations.FluentValidations.Article.Attachment;
@@ -423,6 +425,8 @@ namespace Infrastructure.IOC
             services.AddScoped<IRegisterService, RegisterService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IBankService, BankService>();
+            services.AddScoped<IWalletService, WalletService>();
 
             services.AddTransient<IValidator<RequestSetProductViewModel>, RequestSetProductValidator>();
 

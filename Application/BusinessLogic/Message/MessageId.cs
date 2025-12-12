@@ -108,5 +108,7 @@ namespace Application.BusinessLogic.Message
         CannotEditProduct = -39,
         [Display(Name = "موجودی کالای {0} کمتر از مقدار درخواستی می باشد")]
         ProductInventoryNotEnough = -40,
+        [Display(Name = "موجودی یف پول کافی نمی باشد")]
+        InsufficientWalletBalance = -41,
     }
 }

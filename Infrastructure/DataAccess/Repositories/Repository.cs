@@ -14,7 +14,7 @@ namespace Infrastructure.DataAccess.Repositories
     {
         private const bool AutoSave = true;
         private IMyContext _dbContext;
-        private DbSet<TEntity> _dbSet;// { get { return _dataBaseMainContext.Set<T>(); } }
+        private DbSet<TEntity> _dbSet; // { get { return _dataBaseMainContext.Set<T>(); } }
 
         public Repository(IMyContext context)
         {
@@ -49,7 +49,8 @@ namespace Infrastructure.DataAccess.Repositories
             return DeferredWhere(condition).ApplyAllOrderBy(orderByProperties);
         }
 
-        public IQueryable<TEntity> DeferredWhere(Expression<Func<TEntity, bool>> condition, string orderByProperties, int page, int pageSize)
+        public IQueryable<TEntity> DeferredWhere(Expression<Func<TEntity, bool>> condition, string orderByProperties,
+            int page, int pageSize)
         {
             return DeferredWhere(condition).ApplyAllOrderBy(orderByProperties).DeferredPaginate(page, pageSize);
         }
@@ -84,14 +85,20 @@ namespace Infrastructure.DataAccess.Repositories
                 return await _dbSet.LastOrDefaultAsync(predicate);
             else
             {
-                var result= _dbSet.LastOrDefaultAsync().Result;
+                var result = _dbSet.LastOrDefaultAsync().Result;
                 return result;
             }
         }
-        
+
         public async Task<TEntity> RemoveAsync(TEntity entity, bool autoSave = AutoSave)
         {
             _dbSet.Remove(entity);
+            return await SaveChangesAsync(entity, autoSave);
+        }
+
+        public async Task<TEntity> AddAsync(TEntity entity, bool autoSave)
+        {
+            await _dbSet.AddAsync(entity);
             return await SaveChangesAsync(entity, autoSave);
         }
 
@@ -105,6 +112,7 @@ namespace Infrastructure.DataAccess.Repositories
         {
             return SaveChanges(autoSave) ? entity : null;
         }
+
         private async Task<TEntity> SaveChangesAsync(TEntity entity, bool autoSave)
         {
             return await SaveChangesAsync(autoSave) ? entity : null;
@@ -123,7 +131,7 @@ namespace Infrastructure.DataAccess.Repositories
 
         public async Task<bool> SaveChangesAsync()
         {
-            int succeed =  _dbContext.SaveChangesAsync().Result;
+            int succeed = _dbContext.SaveChangesAsync().Result;
             return succeed > 0;
         }
 
@@ -160,6 +168,7 @@ namespace Infrastructure.DataAccess.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         protected virtual void Dispose(bool disposing)
         {
             //if (_disposed) return;
@@ -168,6 +177,7 @@ namespace Infrastructure.DataAccess.Repositories
                 // Free other state (managed objects).
                 _dbContext?.Dispose();
             }
+
             //// Free your own state (unmanaged objects).
             //// Set large fields to null .
             //_utility = null;
@@ -175,6 +185,5 @@ namespace Infrastructure.DataAccess.Repositories
             _dbContext = null;
             //_disposed = true;
         }
-
     }
 }
