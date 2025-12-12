@@ -104,7 +104,7 @@ namespace Application.BusinessLogic.Message
         EmailNotExist = -37,
         [Display(Name = "کد فعالسازی ایمیل {0} ارسال شد")]
         EmailConfirmCode = -38,
-        [Display(Name = "امکان تغییر محصول/خدمت نمی باشد")]
+        [Display(Name = "امکان تغییر یا حذف نمی باشد")]
         CannotEditProduct = -39,
         [Display(Name = "موجودی کالای {0} کمتر از مقدار درخواستی می باشد")]
         ProductInventoryNotEnough = -40,

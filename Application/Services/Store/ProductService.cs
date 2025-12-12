@@ -73,6 +73,11 @@ public class ProductService : IProductService
         try
         {
             var product = _productRepository.Find(id);
+            if (product.OrderItems != null && product.OrderItems.Any())
+            {
+                messages.Add(new BusinessLogicMessage(type: MessageType.Error, message: MessageId.CannotEditProduct));
+                return new BusinessLogicResult<int>(succeeded: false, result: id, messages: messages);    
+            }
             await _productRepository.RemoveAsync(product, true);
 
             messages.Add(new BusinessLogicMessage(type: MessageType.Info, message: MessageId.Success));
