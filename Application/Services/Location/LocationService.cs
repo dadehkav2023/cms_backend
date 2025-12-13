@@ -8,9 +8,7 @@ using Application.BusinessLogic.Message;
 using Application.Interfaces.IRepositories;
 using Application.ViewModels.Public;
 using Common.EnumList;
-using Domain.Entities.Identity.User;
 using Domain.Entities.Store;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services.Location
@@ -21,14 +19,11 @@ namespace Application.Services.Location
         private readonly IRepository<County> _countyRepository;
         private readonly IRepository<CityOrVillage> _cityOrVillageRepository;
 
-        private readonly UserManager<User> _userManager;
-
-        public LocationService(IUnitOfWork uow, UserManager<User> userManager)
+        public LocationService(IUnitOfWork uow)
         {
             _provinceRepository = uow.GetRepository<Province>();
             _countyRepository = uow.GetRepository<County>();
             _cityOrVillageRepository = uow.GetRepository<CityOrVillage>();
-            _userManager = userManager;
         }
 
         public async Task<IBusinessLogicResult<List<SelectOptionViewModel>>> GetAllProvincesAsync(CancellationToken cancellationToken)
