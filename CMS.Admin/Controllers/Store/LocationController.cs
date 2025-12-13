@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Services.Location;
@@ -8,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.Store
 {
-    [Authorize(Roles = "Admin")]
-    [Route("api/admin/[controller]")]
-    public class AdminLocationController : Controller
+    [Authorize]
+    [Route("api/store/location/[controller]")]
+    public class LocationController : Controller
     {
         private readonly ILocationService _locationService;
 
-        public AdminLocationController(ILocationService locationService)
+        public LocationController(ILocationService locationService)
         {
             _locationService = locationService;
         }
