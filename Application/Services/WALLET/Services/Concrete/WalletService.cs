@@ -60,10 +60,10 @@ namespace Application.Services.WALLET.Services.Concrete
             try
             {
                 var userId = int.Parse(_contextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "user_id").Value);
-                var wallet = await _wallets.DeferredWhere(x => x.UserId == userId).FirstOrDefaultAsync();
+                var walletAmount = await _wallets.DeferredWhere(x => x.UserId == userId).Select(x=>x.Amount).FirstOrDefaultAsync();
 
                 messages.Add(new BusinessLogicMessage(type: MessageType.Info, message: MessageId.Success));
-                return new BusinessLogicResult<long>(succeeded: true, result: wallet.Amount,
+                return new BusinessLogicResult<long>(succeeded: true, result: walletAmount,
                     messages: messages);
             }
             catch (Exception e)
