@@ -19,18 +19,14 @@ using Exception = System.Exception;
 
 namespace Application.Services.Store;
 
-public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager, IWalletService walletService)
-    : IOrderService
+public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager, IWalletService walletService) : IOrderService
 {
     private readonly IRepository<Order> _orderRepository = unitOfWork.GetRepository<Order>();
     private readonly IRepository<Product> _productRepository = unitOfWork.GetRepository<Product>();
 
-    private readonly IRepository<FinancialTransaction> _financialTransactionRepository =
-        unitOfWork.GetRepository<FinancialTransaction>();
+    private readonly IRepository<FinancialTransaction> _financialTransactionRepository = unitOfWork.GetRepository<FinancialTransaction>();
 
-    public async Task<BusinessLogicResult<string>> CreateOrderAsync(RequestCreateNewOrderViewModel model,
-        string userName,
-        CancellationToken ct)
+    public async Task<BusinessLogicResult<string>> CreateOrderAsync(RequestCreateNewOrderViewModel model, string userName, CancellationToken ct)
     {
         var messages = new List<BusinessLogicMessage>();
         try
@@ -59,21 +55,18 @@ public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager,
                 UserId = user.Id,
                 OrderNumber = DateTime.Now.ToString("yyyyMMddHHmmssfff") + new Random().Next(1, 9999),
                 OrderItems = new List<OrderItem>(),
-                FinancialTransactions = new List<FinancialTransaction>()
+                FinancialTransactions = new List<FinancialTransaction>(),
             };
             foreach (var item in model.Items)
             {
-                var product = products.FirstOrDefault(x => x.Id == item.ProductId) ??
-                              throw new Exception("product not found");
+                var product = products.FirstOrDefault(x => x.Id == item.ProductId) ?? throw new Exception("product not found");
 
                 if (product.ProductTypeEnum == ProductTypeEnum.PhysicalProduct)
                 {
                     if (product.Inventory < item.Quantity)
                     {
-                        messages.Add(new BusinessLogicMessage(type: MessageType.Error,
-                            message: MessageId.ProductInventoryNotEnough));
-                        return new BusinessLogicResult<string>(succeeded: false, result: string.Empty,
-                            messages: messages);
+                        messages.Add(new BusinessLogicMessage(type: MessageType.Error, message: MessageId.ProductInventoryNotEnough));
+                        return new BusinessLogicResult<string>(succeeded: false, result: string.Empty, messages: messages);
                     }
 
                     product.Inventory -= item.Quantity;
@@ -84,22 +77,18 @@ public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager,
                     Price = product.Price,
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,
-                    Order = order
+                    Order = order,
                 };
                 order.OrderItems.Add(orderItem);
             }
 
-            order.ProductPrice = order.OrderItems.Select(x => new
-            {
-                totalPrice = (decimal)x.Quantity * x.Price
-            }).Sum(x => x.totalPrice);
+            order.ProductPrice = order.OrderItems.Select(x => new { totalPrice = (decimal)x.Quantity * x.Price }).Sum(x => x.totalPrice);
             order.PayablePrice = order.ProductPrice;
 
             var currentUserWalletBalance = await walletService.GetWalletBalance();
             if (currentUserWalletBalance.Result < order.PayablePrice)
             {
-                messages.Add(new BusinessLogicMessage(type: MessageType.Error,
-                    message: MessageId.InsufficientWalletBalance));
+                messages.Add(new BusinessLogicMessage(type: MessageType.Error, message: MessageId.InsufficientWalletBalance));
                 return new BusinessLogicResult<string>(succeeded: false, result: null, messages: messages);
             }
 
@@ -115,7 +104,7 @@ public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager,
                 Status = FinancialTransactionStatus.Succeeded,
                 UserId = user.Id,
                 PaymentDate = DateTime.Now,
-                Order = order
+                Order = order,
             };
             await _financialTransactionRepository.AddAsync(newFinancialTransaction, false);
             order.FinancialTransactions.Add(newFinancialTransaction);
@@ -130,8 +119,40 @@ public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager,
         catch (Exception ex)
         {
             messages.Add(new BusinessLogicMessage(type: MessageType.Error, message: MessageId.Exception));
-            return new BusinessLogicResult<string>(succeeded: false, result: string.Empty, messages: messages,
-                exception: ex);
+            return new BusinessLogicResult<string>(succeeded: false, result: string.Empty, messages: messages, exception: ex);
+        }
+    }
+
+    public async Task<BusinessLogicResult<List<ResponseGetCurrentUserOrdersViewModel>>> GetCurrentUserOrdersAsync(int userId, CancellationToken ct)
+    {
+        var messages = new List<BusinessLogicMessage>();
+        try
+        {
+            var orders = await _orderRepository
+                .DeferredWhereAsNoTracking(o => o.UserId == userId)
+                .Select(o => new ResponseGetCurrentUserOrdersViewModel
+                {
+                    Id = o.Id,
+                    UserId = o.UserId,
+                    OrderNumber = o.OrderNumber,
+                    OrderStatus = o.OrderStatus,
+                    ProductPrice = o.ProductPrice,
+                    DiscountAmount = o.DiscountAmount,
+                    TaxAmount = o.TaxAmount,
+                    PayablePrice = o.PayablePrice,
+                    ShipmentPrice = o.ShipmentPrice,
+                    Address = o.Address,
+                    PostalCode = o.PostalCode,
+                })
+                .ToListAsync(ct);
+
+            messages.Add(new BusinessLogicMessage(type: MessageType.Info, message: MessageId.Success));
+            return new BusinessLogicResult<List<ResponseGetCurrentUserOrdersViewModel>>(succeeded: true, result: orders, messages: messages);
+        }
+        catch (Exception ex)
+        {
+            messages.Add(new BusinessLogicMessage(type: MessageType.Error, message: MessageId.Exception));
+            return new BusinessLogicResult<List<ResponseGetCurrentUserOrdersViewModel>>(succeeded: false, result: null, messages: messages, exception: ex);
         }
     }
 }
