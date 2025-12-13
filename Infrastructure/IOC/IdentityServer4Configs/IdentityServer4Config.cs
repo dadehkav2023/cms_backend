@@ -83,10 +83,12 @@ namespace Infrastructure.IOC.IdentityServer4Configs
                         {
                             claims.Add(new Claim(userclaim.Type, userclaim.Value));
                         }
-
+                        claims.Add(new Claim("Username", userName));
+                        claims.Add(new Claim("user_id", findUser.Id.ToString()));
                         appIdentity = new ClaimsIdentity(claims);
 
                         context.Principal.AddIdentity(appIdentity);
+                        
 
                         return Task.CompletedTask;
                     }

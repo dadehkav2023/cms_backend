@@ -18,8 +18,8 @@ public class OrderController(IOrderService orderService) : Controller
     public async Task<IActionResult> CreateNewOrder(
         [FromBody] RequestCreateNewOrderViewModel model, CancellationToken cancellationToken)
     {
-        var userName = User.Claims.FirstOrDefault(x=>x.Type == "Username")!.Value;
-        return (await orderService.CreateOrderAsync(model,userName, cancellationToken)).ToWebApiResult()
+        var userId = User.Claims.FirstOrDefault(x=>x.Type == "user_id")!.Value;
+        return (await orderService.CreateOrderAsync(model,userId, cancellationToken)).ToWebApiResult()
             .ToHttpResponse();
     }
 

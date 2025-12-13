@@ -81,8 +81,7 @@ public class BankService : IBankService
             string apiUrl = _configuration.GetSection("BankGateway:APIUrl").Value +
                             _configuration.GetSection("BankGateway:GetTokenApiAddress").Value;
 
-            var userName = _contextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Username").Value;
-            var userId = _userManager.Users.Where(x => x.UserName == userName).Select(x => x.Id).FirstOrDefault();
+            var userId = _contextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "user_id").Value;
 
             using (var httpClient = new HttpClient())
             {
@@ -91,7 +90,7 @@ public class BankService : IBankService
                 var transaction = new FinancialTransaction()
                 {
                     RequestAmount = amount,
-                    UserId = userId,
+                    UserId = int.Parse(userId),
                     Status = FinancialTransactionStatus.Pending,
                     Type = FinancialTransactionTypeEnum.ChargeWallet,
                 };

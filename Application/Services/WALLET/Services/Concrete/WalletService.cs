@@ -41,8 +41,7 @@ namespace Application.Services.WALLET.Services.Concrete
 
         public async Task<bool> SubtractPaymentFromWallet(long paymentAmount)
         {
-            var userName = _contextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Username").Value;
-            var userId = _userManager.Users.Where(x => x.UserName == userName).Select(x => x.Id).FirstOrDefault();
+            var userId = int.Parse(_contextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "user_id").Value);
             var wallet = await _wallets.DeferredWhere(x => x.UserId == userId).FirstOrDefaultAsync();
 
             if (wallet.Amount < paymentAmount)
@@ -60,8 +59,7 @@ namespace Application.Services.WALLET.Services.Concrete
             var messages = new List<BusinessLogicMessage>();
             try
             {
-                var userName = _contextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Username").Value;
-                var userId = _userManager.Users.Where(x => x.UserName == userName).Select(x => x.Id).FirstOrDefault();
+                var userId = int.Parse(_contextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "user_id").Value);
                 var wallet = await _wallets.DeferredWhere(x => x.UserId == userId).FirstOrDefaultAsync();
 
                 messages.Add(new BusinessLogicMessage(type: MessageType.Info, message: MessageId.Success));

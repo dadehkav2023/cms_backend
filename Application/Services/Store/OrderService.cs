@@ -19,7 +19,7 @@ using Exception = System.Exception;
 
 namespace Application.Services.Store;
 
-public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager, IWalletService walletService)
+public class OrderService(IUnitOfWork unitOfWork, IWalletService walletService)
     : IOrderService
 {
     private readonly IRepository<Order> _orderRepository = unitOfWork.GetRepository<Order>();
@@ -29,18 +29,13 @@ public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager,
         unitOfWork.GetRepository<FinancialTransaction>();
 
     public async Task<BusinessLogicResult<string>> CreateOrderAsync(RequestCreateNewOrderViewModel model,
-        string userName,
+        string userId,
         CancellationToken ct)
     {
         var messages = new List<BusinessLogicMessage>();
         try
         {
-            var user = await userManager.FindByNameAsync(userName);
-            if (user == null)
-            {
-                throw new Exception("user is null");
-            }
-
+            
             var result = "";
 
             var productIds = model.Items.Select(x => x.ProductId).ToList();
@@ -56,7 +51,7 @@ public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager,
                 PostalCode = model.PostalCode,
                 Address = model.Address,
                 CityOrVillageId = model.CityOrVillageId,
-                UserId = user.Id,
+                UserId = int.Parse(userId),
                 OrderNumber = DateTime.Now.ToString("yyyyMMddHHmmssfff") + new Random().Next(1, 9999),
                 OrderItems = new List<OrderItem>(),
                 FinancialTransactions = new List<FinancialTransaction>()
@@ -113,7 +108,7 @@ public class OrderService(IUnitOfWork unitOfWork, UserManager<User> userManager,
                 Description = FinancialTransactionTypeEnum.PayFromWallet.GetEnumDescription(),
                 Type = FinancialTransactionTypeEnum.PayFromWallet,
                 Status = FinancialTransactionStatus.Succeeded,
-                UserId = user.Id,
+                UserId = int.Parse(userId),
                 PaymentDate = DateTime.Now,
                 Order = order
             };
