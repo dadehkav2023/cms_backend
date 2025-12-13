@@ -2,6 +2,8 @@
 using Application.Services.AboutUs;
 using Application.ViewModels.AboutUs.Request;
 using CMS.Admin.Helper.Response;
+using Common.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Admin.Controllers.AboutUs
@@ -18,7 +20,7 @@ namespace CMS.Admin.Controllers.AboutUs
             _aboutUsService = aboutUsService;
         }
 
-        //[Authorize]
+        [Authorize(Roles = nameof(RoleEnum.AboutUs))]
         [HttpPost("SetAboutUs")]
         public async Task<IActionResult> SetAboutUs([FromForm] RequestSetAboutUsViewModel requestSetAboutUsViewModel)
         {
