@@ -39,5 +39,7 @@ namespace Common.Enum
         Province = 16,
         [Description("مدیریت کارزار")]
         Karzar = 17,
+        [Description("Admin")]
+        Admin = 18,
     }
 }

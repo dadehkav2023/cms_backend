@@ -12,6 +12,7 @@ namespace Domain.Entities.Identity.User
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string NationalCode { get; set; }
         public bool IsActive { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
