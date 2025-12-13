@@ -1,11 +1,11 @@
-﻿using Application.Interfaces.IRepositories;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using Application.Interfaces.IRepositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repositories
 {
@@ -22,10 +22,14 @@ namespace Infrastructure.DataAccess.Repositories
             _dbSet = _dbContext.Set<TEntity>();
         }
 
-
         public IQueryable<TEntity> DeferdSelectAll()
         {
             return _dbSet.AsQueryable();
+        }
+
+        public IQueryable<TEntity> DeferredSelectAllNoTracking()
+        {
+            return _dbSet.AsNoTracking().AsQueryable();
         }
 
         public async Task<TEntity> FirstOrDefaultItemAsync(Expression<Func<TEntity, bool>> condition)
@@ -33,10 +37,14 @@ namespace Infrastructure.DataAccess.Repositories
             return await _dbSet.FirstOrDefaultAsync(condition);
         }
 
-
         public IQueryable<TEntity> DeferredWhere(Expression<Func<TEntity, bool>> condition)
         {
             return _dbSet.Where(condition);
+        }
+
+        public IQueryable<TEntity> DeferredWhereAsNoTracking(Expression<Func<TEntity, bool>> condition)
+        {
+            return _dbSet.AsNoTracking().Where(condition);
         }
 
         public IQueryable<TEntity> DeferredWhere(Expression<Func<TEntity, bool>> condition, int page, int pageSize)
@@ -49,12 +57,10 @@ namespace Infrastructure.DataAccess.Repositories
             return DeferredWhere(condition).ApplyAllOrderBy(orderByProperties);
         }
 
-        public IQueryable<TEntity> DeferredWhere(Expression<Func<TEntity, bool>> condition, string orderByProperties,
-            int page, int pageSize)
+        public IQueryable<TEntity> DeferredWhere(Expression<Func<TEntity, bool>> condition, string orderByProperties, int page, int pageSize)
         {
             return DeferredWhere(condition).ApplyAllOrderBy(orderByProperties).DeferredPaginate(page, pageSize);
         }
-
 
         public bool Any(Expression<Func<TEntity, bool>> predicate)
         {
@@ -65,7 +71,6 @@ namespace Infrastructure.DataAccess.Repositories
         {
             return _dbSet.Find(keyValue);
         }
-
 
         public TEntity Add(TEntity entity)
         {

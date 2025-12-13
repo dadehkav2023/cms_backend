@@ -12,6 +12,7 @@ namespace Domain.Entities.Identity.User
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string NationalCode { get; set; }
         public bool IsActive { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
@@ -24,7 +25,5 @@ namespace Domain.Entities.Identity.User
         //public int UserLegalId { get; set; }
         //public virtual UserReal UserReal { get; set; }
         //public int UserRealId { get; set; }
-
-
     }
 }

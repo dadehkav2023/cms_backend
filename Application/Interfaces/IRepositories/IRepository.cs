@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Interfaces.IRepositories
 {
-
     public interface IRepository<TEntity> : IDisposable
         where TEntity : class
     {
         IQueryable<TEntity> DeferdSelectAll();
+        IQueryable<TEntity> DeferredSelectAllNoTracking();
         TEntity Add(TEntity entity);
         Task<TEntity> AddAsync(TEntity entity);
         Task<TEntity> AddAsync(TEntity entity, bool autoSave);
         Task<TEntity> FirstOrDefaultItemAsync(Expression<Func<TEntity, bool>> condition);
 
         IQueryable<TEntity> DeferredWhere(Expression<Func<TEntity, bool>> condition);
+        IQueryable<TEntity> DeferredWhereAsNoTracking(Expression<Func<TEntity, bool>> condition);
 
         IQueryable<TEntity> DeferredWhere(Expression<Func<TEntity, bool>> condition, string orderByProperties);
 

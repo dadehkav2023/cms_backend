@@ -8,6 +8,7 @@ using Application.Services.CMS.Setting;
 using Application.Services.ContactUs;
 using Application.Services.ContactUs.ContactUsMessage;
 using Application.Services.ImageGallery;
+using Application.Services.Location;
 using Application.Services.Map;
 using Application.Services.Menu;
 using Application.Services.Messages;
@@ -79,8 +80,7 @@ namespace Infrastructure.IOC
 {
     public static class ConfigurationServices
     {
-        public static IServiceCollection AddAppConfigures(this IServiceCollection services,
-            IConfiguration configuration)
+        public static IServiceCollection AddAppConfigures(this IServiceCollection services, IConfiguration configuration)
         {
             return services;
         }
@@ -92,14 +92,12 @@ namespace Infrastructure.IOC
             return services;
         }
 
-
         public static IServiceCollection AddGalleryServices(this IServiceCollection services)
         {
             //services.AddScoped<IUsersService, UsersService>();
 
             return services;
         }
-
 
         public static IServiceCollection AddCMSServices(this IServiceCollection services)
         {
@@ -157,20 +155,14 @@ namespace Infrastructure.IOC
             services.AddTransient<IValidator<RequestNewNotificationViewModel>, NewNotificationServiceValidation>();
             services.AddTransient<IValidator<RequestEditNotificationViewModel>, EditNotificationServiceValidation>();
 
-
             #region Attachment
 
             //Services
             services.AddScoped<INotificationAttachmentService, NotificationAttachmentService>();
 
-
             //FluentValidation
-            services
-                .AddTransient<IValidator<RequestNewNotificationAttachmentViewModel>,
-                    NewNotificationAttachmentServiceValidation>();
-            services
-                .AddTransient<IValidator<RequestEditNotificationAttachmentViewModel>,
-                    EditNotificationAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestNewNotificationAttachmentViewModel>, NewNotificationAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestEditNotificationAttachmentViewModel>, EditNotificationAttachmentServiceValidation>();
 
             #endregion
 
@@ -187,14 +179,9 @@ namespace Infrastructure.IOC
             //Services
             services.AddScoped<IRulesAttachmentService, RulesAttachmentService>();
 
-
             //FluentValidation
-            services
-                .AddTransient<IValidator<RequestNewRulesAttachmentViewModel>,
-                    NewRulesAttachmentServiceValidation>();
-            services
-                .AddTransient<IValidator<RequestEditRulesAttachmentViewModel>,
-                    EditRulesAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestNewRulesAttachmentViewModel>, NewRulesAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestEditRulesAttachmentViewModel>, EditRulesAttachmentServiceValidation>();
 
             #endregion
 
@@ -210,20 +197,14 @@ namespace Infrastructure.IOC
             services.AddTransient<IValidator<RequestNewStatementViewModel>, NewStatementServiceValidation>();
             services.AddTransient<IValidator<RequestEditStatementViewModel>, EditStatementServiceValidation>();
 
-
             #region Attachment
 
             //Services
             services.AddScoped<IStatementAttachmentService, StatementAttachmentService>();
 
-
             //FluentValidation
-            services
-                .AddTransient<IValidator<RequestNewStatementAttachmentViewModel>,
-                    NewStatementAttachmentServiceValidation>();
-            services
-                .AddTransient<IValidator<RequestEditStatementAttachmentViewModel>,
-                    EditStatementAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestNewStatementAttachmentViewModel>, NewStatementAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestEditStatementAttachmentViewModel>, EditStatementAttachmentServiceValidation>();
 
             #endregion
 
@@ -237,7 +218,6 @@ namespace Infrastructure.IOC
             return services;
         }
 
-
         public static IServiceCollection AddArticleServices(this IServiceCollection services)
         {
             //Services
@@ -247,20 +227,14 @@ namespace Infrastructure.IOC
             services.AddTransient<IValidator<RequestNewArticleViewModel>, NewArticleServiceValidation>();
             services.AddTransient<IValidator<RequestEditStatementViewModel>, EditStatementServiceValidation>();
 
-
             #region Attachment
 
             //Services
             services.AddScoped<IArticleAttachmentService, ArticleAttachmentService>();
 
-
             //FluentValidation
-            services
-                .AddTransient<IValidator<RequestNewArticleAttachmentViewModel>,
-                    NewArticleAttachmentServiceValidation>();
-            services
-                .AddTransient<IValidator<RequestEditArticleAttachmentViewModel>,
-                    EditArticleAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestNewArticleAttachmentViewModel>, NewArticleAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestEditArticleAttachmentViewModel>, EditArticleAttachmentServiceValidation>();
 
             #endregion
 
@@ -275,6 +249,14 @@ namespace Infrastructure.IOC
             return services;
         }
 
+        public static IServiceCollection AddLocationServices(this IServiceCollection services)
+        {
+            //Services
+            services.AddScoped<ILocationService, LocationService>();
+
+            return services;
+        }
+
         public static IServiceCollection AddNewsServices(this IServiceCollection services)
         {
             //Services
@@ -283,7 +265,6 @@ namespace Infrastructure.IOC
             // FluentValidation
             services.AddTransient<IValidator<RequestNewNewsViewModel>, NewNewsServiceValidation>();
             services.AddTransient<IValidator<RequestEditNewsViewModel>, EditNewsServiceValidation>();
-
 
             #region PhotoNews
 
@@ -295,14 +276,9 @@ namespace Infrastructure.IOC
             //Attachment
             services.AddScoped<IPhotoNewsAttachmentService, PhotoNewsAttachmentService>();
 
-
             //FluentValidation
-            services
-                .AddTransient<IValidator<RequestNewPhotoNewsAttachmentViewModel>,
-                    NewPhotoNewsAttachmentServiceValidation>();
-            services
-                .AddTransient<IValidator<RequestEditPhotoNewsAttachmentViewModel>,
-                    EditPhotoNewsAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestNewPhotoNewsAttachmentViewModel>, NewPhotoNewsAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestEditPhotoNewsAttachmentViewModel>, EditPhotoNewsAttachmentServiceValidation>();
 
             #endregion
 
@@ -318,14 +294,9 @@ namespace Infrastructure.IOC
             //Attachment
             services.AddScoped<IVideoNewsAttachmentService, VideoNewsAttachmentService>();
 
-
             //FluentValidation
-            services
-                .AddTransient<IValidator<RequestNewVideoNewsAttachmentViewModel>,
-                    NewVideoNewsAttachmentServiceValidation>();
-            services
-                .AddTransient<IValidator<RequestEditVideoNewsAttachmentViewModel>,
-                    EditVideoNewsAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestNewVideoNewsAttachmentViewModel>, NewVideoNewsAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestEditVideoNewsAttachmentViewModel>, EditVideoNewsAttachmentServiceValidation>();
 
             #endregion
 
@@ -341,14 +312,9 @@ namespace Infrastructure.IOC
             //Services
             services.AddScoped<ITextNewsAttachmentService, TextNewsAttachmentService>();
 
-
             //FluentValidation
-            services
-                .AddTransient<IValidator<RequestTextNewNewsAttachmentViewModel>,
-                    NewTextNewsAttachmentServiceValidation>();
-            services
-                .AddTransient<IValidator<RequestEditTextNewsAttachmentViewModel>,
-                    EditTextNewsAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestTextNewNewsAttachmentViewModel>, NewTextNewsAttachmentServiceValidation>();
+            services.AddTransient<IValidator<RequestEditTextNewsAttachmentViewModel>, EditTextNewsAttachmentServiceValidation>();
 
             #endregion
 
@@ -407,7 +373,6 @@ namespace Infrastructure.IOC
             //FluentValidation
             services.AddTransient<IValidator<RequestSetContactUsViewModel>, ContactUsValidation>();
 
-
             #region ContactUs Message
 
             //Services
@@ -430,10 +395,9 @@ namespace Infrastructure.IOC
 
             services.AddTransient<IValidator<RequestSetProductViewModel>, RequestSetProductValidator>();
 
-            
             return services;
         }
-        
+
         public static IServiceCollection AddUserService(this IServiceCollection services)
         {
             //Services
@@ -442,12 +406,12 @@ namespace Infrastructure.IOC
 
             return services;
         }
-        
+
         public static IServiceCollection AddNoticesService(this IServiceCollection services)
         {
             //Services
             services.AddScoped<ISmsSenderService, SmsSenderService>();
-            
+
             return services;
         }
     }

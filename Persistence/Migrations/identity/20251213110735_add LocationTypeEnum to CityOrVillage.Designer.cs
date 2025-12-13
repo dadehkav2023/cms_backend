@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Contexts;
 
 namespace Persistence.Migrations.identity
 {
     [DbContext(typeof(IdentityDataBaseContext))]
-    partial class IdentityDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251213110735_add LocationTypeEnum to CityOrVillage")]
+    partial class addLocationTypeEnumtoCityOrVillage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,9 +221,6 @@ namespace Persistence.Migrations.identity
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NationalCode")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)

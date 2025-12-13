@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /StaticFile.EndPoint/wwwroot/Resources/images/2021/2021-9
+
+.csharpierrc.json

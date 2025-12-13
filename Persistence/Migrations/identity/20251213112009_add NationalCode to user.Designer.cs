@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Contexts;
 
 namespace Persistence.Migrations.identity
 {
     [DbContext(typeof(IdentityDataBaseContext))]
-    partial class IdentityDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20251213112009_add NationalCode to user")]
+    partial class addNationalCodetouser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
